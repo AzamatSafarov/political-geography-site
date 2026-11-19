@@ -4,7 +4,7 @@
 
 ## Сборка
 
-Нужен Node.js 20 или новее. Зависимостей нет.
+Нужен Node.js 20 или новее. Зависимостей нет, `npm install` не требуется.
 
 ```sh
 node build.mjs
@@ -18,7 +18,7 @@ node build.mjs
 python -m http.server 8000 --directory site
 ```
 
-Открывать `http://localhost:8000/`. Сайт рассчитан на корень домена: внутренние ссылки абсолютные, чтобы работать с `trailingSlash` на Vercel.
+Открывать `http://127.0.0.1:8000/`. Внутренние ссылки абсолютные, поэтому сайт рассчитан на корень домена: так они продолжают работать после редиректа Vercel на `/course/` и `/seminars/01-djibouti/`. Прямое открытие `site/index.html` через `file://` стили не загрузит.
 
 ## Структура
 
@@ -38,7 +38,7 @@ vercel.json               настройки статического депло
 
 ## Деплой
 
-Проект Vercel собирает не он, а репозиторий: `buildCommand` пустой, `outputDirectory` указывает на готовый `site/`.
+Проект Vercel не собирает сайт: `buildCommand` пустой, `outputDirectory` указывает на готовый `site/`.
 
 ```sh
 vercel deploy --prod --yes --project political-geography-v2 --scope kirin-jindoshs-projects
@@ -65,3 +65,4 @@ vercel deploy --prod --yes --project political-geography-v2 --scope kirin-jindos
 - Фильтр форматов работает без перезагрузки, при отключённом JS список читается целиком.
 - Карты рисуются локальным SVG: мировая с восемью точками и региональный кадр на каждом семинаре.
 - Шрифты self-hosted, с кириллицей, `font-display: swap` и системным запасным набором.
+- На проде все канонические маршруты отвечают 200, HTML совпадает с локальной сборкой побайтово.
